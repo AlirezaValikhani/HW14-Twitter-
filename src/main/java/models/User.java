@@ -12,7 +12,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(unique = true,nullable = false)
     private String userName;
     private String password;
@@ -27,7 +27,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Comment> comment;
 
-    public User(Integer id, String userName, String password, String firstName, String lastName, String nationalCode, String phoneNumber, Set<Twit> twit, Set<Comment> comment) {
+    public User(Long id, String userName, String password, String firstName, String lastName, String nationalCode, String phoneNumber, Set<Twit> twit, Set<Comment> comment) {
         this.id = id;
         this.userName = userName;
         this.password = password;

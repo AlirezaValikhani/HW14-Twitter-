@@ -12,7 +12,7 @@ import java.util.Set;
 public class Twit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(length = 280)
     private String twit;
     @ManyToOne
@@ -20,7 +20,7 @@ public class Twit {
     @OneToMany(mappedBy = "twit")
     private Set<Comment> comments;
 
-    public Twit(Integer id, String twit, User user, Set<Comment> comments) {
+    public Twit(Long id, String twit, User user, Set<Comment> comments) {
         this.id = id;
         this.twit = twit;
         this.user = user;
