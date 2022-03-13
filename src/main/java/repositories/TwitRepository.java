@@ -8,7 +8,10 @@ public class TwitRepository extends BaseRepositoryImpl<Twit,Long> {
 
     public Twit findById(Long id){
         try(var session = sessionFactory.openSession()){
-            return session.find(Twit.class, id);
+            return session
+                    .createQuery("SELECT t FROM models.Twit t WHERE t.id = :id",Twit.class)
+                    .setParameter("id",id)
+                    .getSingleResult();
         }
     }
 

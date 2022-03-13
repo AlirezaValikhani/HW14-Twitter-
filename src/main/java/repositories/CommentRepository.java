@@ -8,7 +8,10 @@ public class CommentRepository extends BaseRepositoryImpl<Comment,Long>{
 
     public Comment findById(Long id){
         try(var session = sessionFactory.openSession()){
-            return session.find(Comment.class, id);
+            return session
+                    .createQuery("SELECT c FROM models.Comment c WHERE c.id = :id",Comment.class)
+                    .setParameter("id",id)
+                    .getSingleResult();
         }
     }
 

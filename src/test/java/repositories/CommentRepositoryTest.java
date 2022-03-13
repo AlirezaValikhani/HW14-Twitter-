@@ -30,36 +30,35 @@ class CommentRepositoryTest {
     @Test
     public void save(){
         Comment comment = new Comment(null,"a",null,null);
-        Comment resultComment = commentRepository.save(comment);
-        Twit twit = new Twit(null,"g",null,new HashSet<>());
+        /*Twit twit = new Twit(null,"g",null,new HashSet<>());
         twitRepository.save(twit);
         User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
         userRepository.save(user);
         twit.setUser(user);
-        resultComment.setTwit(twit);
-        resultComment.setUser(user);
+        comment.setTwit(twit);
+        comment.setUser(user);*/
 
-        Comment returnedComment = commentRepository.save(resultComment);
+        Comment returnedComment = commentRepository.save(comment);
 
         assertNotNull(returnedComment);
-        assertEquals(user,resultComment.getUser());
-        assertEquals(twit,resultComment.getTwit());
+        /*assertEquals(user,comment.getUser());
+        assertEquals(twit,comment.getTwit());*/
     }
 
     @Test
     public void update(){
         Comment comment = new Comment(null,"a",null,null);
-        Comment resultComment = commentRepository.save(comment);
-        Twit twit = new Twit(null,"g",null,new HashSet<>());
+        commentRepository.save(comment);
+        /*Twit twit = new Twit(null,"g",null,new HashSet<>());
         twitRepository.save(twit);
         User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
         userRepository.save(user);
         twit.setUser(user);
         resultComment.setTwit(twit);
         resultComment.setUser(user);
-        Comment returnedComment = commentRepository.save(resultComment);
+        Comment returnedComment = commentRepository.save(resultComment);*/
 
-        Comment updatedComment = new Comment(comment.getId(), "b",twit,user);
+        Comment updatedComment = new Comment(comment.getId(), "b",null,null);
         commentRepository.update(updatedComment);
 
         assertEquals(comment.getId(),updatedComment.getId());
@@ -69,68 +68,59 @@ class CommentRepositoryTest {
     @Test
     public void delete(){
         Comment comment = new Comment(null,"a",null,null);
-        Comment resultComment = commentRepository.save(comment);
-        Twit twit = new Twit(null,"g",null,new HashSet<>());
+        commentRepository.save(comment);
+        /*Twit twit = new Twit(null,"g",null,new HashSet<>());
         twitRepository.save(twit);
         User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
         userRepository.save(user);
         twit.setUser(user);
         resultComment.setTwit(twit);
         resultComment.setUser(user);
-        Comment returnedComment = commentRepository.save(resultComment);
+        Comment returnedComment = commentRepository.save(resultComment);*/
 
-        commentRepository.delete(returnedComment);
+        commentRepository.delete(comment);
 
-        assertNull(resultComment.getId());
+        assertNull(comment.getId());
+        assertNull(comment.getComment());
     }
 
     @Test
     void findById() {
         Comment comment = new Comment(null,"a",null,null);
-        Comment resultComment = commentRepository.save(comment);
-        Twit twit = new Twit(null,"g",null,new HashSet<>());
-        twitRepository.save(twit);
-        User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        userRepository.save(user);
-        twit.setUser(user);
-        resultComment.setTwit(twit);
-        resultComment.setUser(user);
-        Comment returnedComment = commentRepository.save(resultComment);
+        commentRepository.save(comment);
 
-        Comment comment1 = commentRepository.findById(returnedComment.getId());
+        Comment comment1 = commentRepository.findById(comment.getId());
 
         assertNotNull(comment1);
-        assertEquals(returnedComment.getId(),comment1.getId());
-        assertEquals(returnedComment.getComment(),comment1.getComment());
+        assertEquals(comment.getId(),comment1.getId());
+        assertEquals(comment.getComment(),comment1.getComment());
     }
 
     @Test
     void findAll() {
         Comment comment = new Comment(null,"a",null,null);
-        Comment resultComment = commentRepository.save(comment);
-        Twit twit = new Twit(null,"g",null,new HashSet<>());
+        commentRepository.save(comment);
+        /*Twit twit = new Twit(null,"g",null,new HashSet<>());
         twitRepository.save(twit);
         User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
         userRepository.save(user);
         twit.setUser(user);
         resultComment.setTwit(twit);
-        resultComment.setUser(user);
-        Comment returnedComment = commentRepository.save(resultComment);
+        resultComment.setUser(user);*/
         Comment comment1 = new Comment(null,"a",null,null);
-        Comment resultComment1 = commentRepository.save(comment1);
-        Twit twit1 = new Twit(null,"g",null,new HashSet<>());
+        commentRepository.save(comment1);
+        /*Twit twit1 = new Twit(null,"g",null,new HashSet<>());
         twitRepository.save(twit1);
         User user1 = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
         userRepository.save(user1);
         twit.setUser(user);
         resultComment.setTwit(twit);
-        resultComment.setUser(user);
-        Comment returnedComment1 = commentRepository.save(resultComment1);
+        resultComment.setUser(user);*/
 
         List<Comment> returnedCommentList = commentRepository.findAll();
 
         assertNotNull(returnedCommentList);
-        assertEquals(returnedCommentList.get(0).getId(),returnedComment.getId());
+        assertEquals(returnedCommentList.get(0).getId(),comment.getId());
         assertNotEquals(0,returnedCommentList.size());
         assertEquals(2,returnedCommentList.size());
     }

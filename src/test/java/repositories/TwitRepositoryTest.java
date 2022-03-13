@@ -26,9 +26,7 @@ class TwitRepositoryTest {
 
     @Test
     public void save(){
-        User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        User returnedUser = userRepository.save(user);
-        Twit twit = new Twit(null,"a",returnedUser,new HashSet<>());
+        Twit twit = new Twit(null,"a",null,new HashSet<>());
 
         Twit returnedTwit = twitRepository.save(twit);
 
@@ -38,39 +36,29 @@ class TwitRepositoryTest {
 
     @Test
     public void update(){
-        User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        User returnedUser = userRepository.save(user);
-        Twit twit = new Twit(null,"a",returnedUser,new HashSet<>());
+        Twit twit = new Twit(null,"a",null,new HashSet<>());
         Twit returnedTwit = twitRepository.save(twit);
 
-        User user1 = new User(user.getId(), "b","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        User returnedUser1 = userRepository.save(user1);
-        Twit twit1 = new Twit(twit.getId(), "b",returnedUser,new HashSet<>());
-        Twit returnedTwit1 = twitRepository.save(twit1);
-        Twit updatedTwit = twitRepository.update(returnedTwit1);
+        Twit twit1 = new Twit(twit.getId(), "b",null,new HashSet<>());
+        Twit updatedTwit = twitRepository.update(twit1);
 
         assertEquals(returnedTwit.getId(),updatedTwit.getId());
         assertEquals("b",updatedTwit.getTwit());
-        assertNotEquals(returnedTwit.getUser(),updatedTwit.getUser());
     }
 
     @Test
     public void delete(){
-        User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        User returnedUser = userRepository.save(user);
-        Twit twit = new Twit(null,"a",returnedUser,new HashSet<>());
+        Twit twit = new Twit(null,"a",null,new HashSet<>());
         Twit returnedTwit = twitRepository.save(twit);
 
         twitRepository.delete(returnedTwit);
 
-        assertNull(user.getId());
+        assertNull(twit.getId());
     }
 
     @Test
     void findById() {
-        User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        User returnedUser = userRepository.save(user);
-        Twit twit = new Twit(null,"a",returnedUser,new HashSet<>());
+        Twit twit = new Twit(null,"a",null,new HashSet<>());
         twitRepository.save(twit);
 
         Twit returnedTwit = twitRepository.findById(twit.getId());
@@ -82,9 +70,8 @@ class TwitRepositoryTest {
 
     @Test
     void findAll() {
-        User user = new User(null,"a","a","1","b","2","12",new HashSet<>(),new HashSet<>());
-        User returnedUser = userRepository.save(user);
-        Twit twit = new Twit(null,"a",returnedUser,new HashSet<>());
+
+        Twit twit = new Twit(null,"a",null,new HashSet<>());
         twitRepository.save(twit);
 
         List<Twit> returnedTwitList = twitRepository.findAll();
