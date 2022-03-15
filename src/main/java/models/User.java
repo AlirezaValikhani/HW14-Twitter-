@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +30,17 @@ public class User {
 
     public User(Long id, String userName, String password, String firstName, String lastName, String nationalCode, String phoneNumber, Set<Twit> twit, Set<Comment> comment) {
         this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nationalCode = nationalCode;
+        this.phoneNumber = phoneNumber;
+        this.twit = twit;
+        this.comment = comment;
+    }
+
+    public User(String userName, String password, String firstName, String lastName, String nationalCode, String phoneNumber, Set<Twit> twit, Set<Comment> comment) {
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;

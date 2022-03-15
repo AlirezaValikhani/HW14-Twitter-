@@ -25,6 +25,17 @@ public class Comment {
         this.user = user;
     }
 
+    public Comment(String comment, Twit twit, User user) {
+        this.comment = comment;
+        this.twit = twit;
+        this.user = user;
+    }
+
+    public Comment(Long id, String comment) {
+        this.id = id;
+        this.comment = comment;
+    }
+
     public Comment() {
     }
 }

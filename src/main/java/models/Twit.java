@@ -27,6 +27,21 @@ public class Twit {
         this.comments = comments;
     }
 
+    public Twit(String twit, User user, Set<Comment> comments) {
+        this.twit = twit;
+        this.user = user;
+        this.comments = comments;
+    }
+
+    public Twit(Long id) {
+        this.id = id;
+    }
+
+    public Twit(Long id, String twit) {
+        this.id = id;
+        this.twit = twit;
+    }
+
     public Twit() {
     }
 }

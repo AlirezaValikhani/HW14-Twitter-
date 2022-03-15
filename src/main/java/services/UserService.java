@@ -36,4 +36,8 @@ public class UserService implements BaseService<User,Long> {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    public User findByUserName(String userName){
+        return userRepository.findByUserName(userName);
+    }
 }

@@ -31,4 +31,13 @@ public class CommentRepository extends BaseRepositoryImpl<Comment,Long>{
             transaction.commit();
         }
     }
+
+    public List<Comment> findAllByTwitId(Long twitId){
+        try(var session = sessionFactory.openSession()){
+            return session
+                    .createQuery("SELECT c FROM models.Comment c WHERE c.id = :id",Comment.class)
+                    .setParameter("id",twitId)
+                    .list();
+        }
+    }
 }

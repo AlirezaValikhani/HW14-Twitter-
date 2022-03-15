@@ -80,8 +80,7 @@ class CommentRepositoryTest {
 
         commentRepository.delete(comment);
 
-        assertNull(comment.getId());
-        assertNull(comment.getComment());
+        assertEquals(0,commentRepository.findAll().size());
     }
 
     @Test

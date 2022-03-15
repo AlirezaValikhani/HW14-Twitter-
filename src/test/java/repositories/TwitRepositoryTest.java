@@ -53,7 +53,7 @@ class TwitRepositoryTest {
 
         twitRepository.delete(returnedTwit);
 
-        assertNull(twit.getId());
+        assertEquals(0,twitRepository.findAll().size());
     }
 
     @Test
