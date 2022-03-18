@@ -36,4 +36,9 @@ public class TwitService implements BaseService<Twit, Long> {
     public List<Twit> findAll() {
         return twitRepository.findAll();
     }
+
+
+    public List<Twit> findUserTwits(Long userId) {
+        return twitRepository.findUserTwits(userId);
+    }
 }

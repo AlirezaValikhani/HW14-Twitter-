@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Comment;
+import models.Twit;
 
 import java.util.List;
 
@@ -38,6 +39,14 @@ public class CommentRepository extends BaseRepositoryImpl<Comment,Long>{
                     .createQuery("SELECT c FROM models.Comment c WHERE c.id = :id",Comment.class)
                     .setParameter("id",twitId)
                     .list();
+        }
+    }
+
+    public List<Comment> findByTwitId(Long twitId){
+        try(var session = sessionFactory.openSession()){
+            return session
+            .createQuery("select c from models.Comment c inner join models.Twit t on c.twit.id = t.id", Comment.class)
+            .list();
         }
     }
 }

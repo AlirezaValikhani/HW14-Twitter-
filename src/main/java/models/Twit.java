@@ -16,6 +16,7 @@ public class Twit {
     @Column(length = 280)
     private String twit;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "twit")
     private Set<Comment> comments;
@@ -43,5 +44,10 @@ public class Twit {
     }
 
     public Twit() {
+    }
+
+    @Override
+    public String toString() {
+        return "--------------------------------------------------\nTwit ID : " + id + "\nTwit : " + twit +  "\n--------------------------------------------------";
     }
 }

@@ -129,7 +129,7 @@ public class Menu {
                     seeAllTwits(user);
                     break;
                 case 8:
-                    return;
+                    firstMenu();
                 default:
                     System.out.println("Please enter a number between 1 upto 7");
             }
@@ -148,7 +148,7 @@ public class Menu {
 
     public void seeAccount(User user) {
         if (userService.findAll() != null) {
-            System.out.println(userService.findAll().toString());
+            System.out.println(userService.findByUserName(user.getUserName()).toString());
             userMenu(user);
         } else {
             System.out.println("You dont have any account here");
@@ -232,8 +232,11 @@ public class Menu {
     }
 
     public void seeTwits(User user) {
-        if (twitService.findAll() != null) {
-            System.out.println(twitService.findAll().toString());
+        if (twitService.findUserTwits(user.getId()) != null) {
+            List<Twit> twits = twitService.findUserTwits(user.getId());
+            for (Twit t:twits) {
+                System.out.println(t.toString());
+            }
         } else {
             System.out.println("You dont have any twit here");
             twitPart(user);
@@ -252,9 +255,12 @@ public class Menu {
 
     public void editTwits(User user) {
         while (true) {
-            System.out.println("Please edit your twit: ");
+            seeTwits(user);
+            System.out.println("Twit id : ");
+            Long id = scanner.nextLong();
+            System.out.println("Edit twit: ");
             String twitText = scanner.next();
-            Twit twit = new Twit(user.getId(), twitText);
+            Twit twit = new Twit(id, twitText);
             if (twitService.findById(twit.getId()) == null) {
                 System.out.println("This twit does not exist, please go to add part to adding new twit");
                 twitPart(user);
@@ -298,16 +304,16 @@ public class Menu {
 
     public void LeaveNewComment(User user) {
         System.out.println(twitService.findAll().toString());
-        System.out.println("Enter twit id to leave a comment : ");
+        System.out.println("Choose twit id : ");
         Long twitId = scanner.nextLong();
         scanner.nextLine();
         try {
             Twit twit1 = twitService.findById(twitId);
-            System.out.println("Leave a comment for this twit : ");
+            System.out.println("Comment : ");
             String comment = scanner.nextLine();
             Comment comment1 = new Comment(comment, twit1, user);
             Comment returnedComment = commentService.save(comment1);
-            System.out.println("Comment added and comment id is : " + returnedComment.getId());
+            System.out.println( user.getUserName() + " added comment." + "\nComment id : " + returnedComment.getId());
             commentPart(user);
         }
         catch (TwitNotFoundException t){
@@ -316,39 +322,63 @@ public class Menu {
     }
 
     public void seeComments(User user) {
-        if (commentService.findAll() != null) {
-            List<Comment> comments = commentService.findAll();
+        seeTwits(user);
+        System.out.println("Twit id : ");
+        Long twitId = scanner.nextLong();
+        scanner.nextLine();
+        if (commentService.findByTwitId(twitId) != null) {
+            List<Comment> comments = commentService.findByTwitId(twitId);
             for (Comment c:comments) {
                 System.out.println(c);
             }
             commentPart(user);
         } else {
-            System.out.println("You dont have any comment here");
+            System.out.println("------------------------------\nYou dont have any comment here\n------------------------------");
+            commentPart(user);
+        }
+    }
+
+    public void watchList(User user){
+        seeTwits(user);
+        System.out.println("Twit id : ");
+        Long twitId = scanner.nextLong();
+        scanner.nextLine();
+        if (commentService.findByTwitId(twitId) != null) {
+            List<Comment> comments = commentService.findByTwitId(twitId);
+            for (Comment c:comments) {
+                System.out.println(c);
+            }
+        } else {
+            System.out.println("------------------------------\nYou dont have any comment here\n------------------------------");
             commentPart(user);
         }
     }
 
     public void deleteComments(User user) {
-        seeComments(user);
-        System.out.println("Enter your comment id : ");
-        Long twitId = scanner.nextLong();
-        Twit twit = new Twit(twitId);
-        twitService.delete(twit);
-        System.out.println("Twit number " + twitId + " deleted successfully");
-        twitPart(user);
+        watchList(user);
+        System.out.println("Comment id : ");
+        Long commentId = scanner.nextLong();
+        Comment comment = new Comment(commentId);
+        commentService.delete(comment);
+        System.out.println("----------------------------------------\nComment number " + commentId + " deleted successfully\n----------------------------------------");
+        commentPart(user);
     }
 
     public void editComments(User user) {
         while (true) {
-            System.out.println("Please edit your comment: ");
-            String comment = scanner.next();
-            if (commentService.findById(user.getId()) == null) {
-                System.out.println("This twit does not exist, please go to add part to adding new twit");
-                twitPart(user);
+            watchList(user);
+            System.out.println("Comment id : ");
+            Long commentId = scanner.nextLong();
+            System.out.println("Edit comment: ");
+            String commentContent = scanner.next();
+            if (commentService.findById(commentId) != null) {
+                Comment returnedComment = commentService.findById(commentId);
+                Comment comment = new Comment(commentId,commentContent,returnedComment.getTwit(),returnedComment.getUser());
+                commentService.update(comment);
+                System.out.println("--------------------\nEdit was successful\n--------------------");
+                commentPart(user);
             } else {
-                Twit account1 = new Twit(user.getId(), comment);
-                twitService.update(account1);
-                System.out.println("Edit was successful");
+                System.out.println("------------------------------\nThis twit does not exist!!!\n------------------------------");
                 twitPart(user);
             }
         }

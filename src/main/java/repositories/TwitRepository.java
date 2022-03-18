@@ -31,4 +31,12 @@ public class TwitRepository extends BaseRepositoryImpl<Twit,Long> {
             transaction.commit();
         }
     }
+
+    public List<Twit> findUserTwits(Long userId){
+        try(var session = sessionFactory.openSession()){
+            return session
+                    .createQuery("select t from models.Twit t inner join models.User u on t.user.id = u.id",Twit.class)
+                    .list();
+        }
+    }
 }

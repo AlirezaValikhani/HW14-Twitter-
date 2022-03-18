@@ -38,4 +38,13 @@ public class Comment {
 
     public Comment() {
     }
+
+    public Comment(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "-------------------\nID : " + id + "\nComment : " + comment + "\n-------------------\n";
+    }
 }

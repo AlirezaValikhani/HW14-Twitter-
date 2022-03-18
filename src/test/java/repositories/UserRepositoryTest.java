@@ -93,7 +93,8 @@ class UserRepositoryTest {
         userRepository.findByUserName(user.getUserName());
 
         assertNotNull(user);
-        /*assertEquals(user.getUserName(),user.getUserName());*/
+        assertNotEquals(0,user.getId());
+        assertEquals(1,userRepository.findAll().size());
     }
 
     @AfterEach

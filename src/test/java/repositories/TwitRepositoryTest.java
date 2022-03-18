@@ -5,6 +5,7 @@ import models.User;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -27,6 +28,10 @@ class TwitRepositoryTest {
     @Test
     public void save(){
         Twit twit = new Twit(null,"a",null,new HashSet<>());
+        twitRepository.save(twit);
+        User user = new User(null,"f","a","a","fd","f","3",new HashSet<>(),new HashSet<>());
+        userRepository.save(user);
+        twit.setUser(user);
 
         Twit returnedTwit = twitRepository.save(twit);
 
@@ -38,6 +43,9 @@ class TwitRepositoryTest {
     public void update(){
         Twit twit = new Twit(null,"a",null,new HashSet<>());
         Twit returnedTwit = twitRepository.save(twit);
+        User user = new User(null,"f","a","a","fd","f","3",new HashSet<>(),new HashSet<>());
+        userRepository.save(user);
+        twit.setUser(user);
 
         Twit twit1 = new Twit(twit.getId(), "b",null,new HashSet<>());
         Twit updatedTwit = twitRepository.update(twit1);
@@ -50,6 +58,9 @@ class TwitRepositoryTest {
     public void delete(){
         Twit twit = new Twit(null,"a",null,new HashSet<>());
         Twit returnedTwit = twitRepository.save(twit);
+        User user = new User(null,"f","a","a","fd","f","3",new HashSet<>(),new HashSet<>());
+        userRepository.save(user);
+        twit.setUser(user);
 
         twitRepository.delete(returnedTwit);
 
@@ -60,6 +71,9 @@ class TwitRepositoryTest {
     void findById() {
         Twit twit = new Twit(null,"a",null,new HashSet<>());
         twitRepository.save(twit);
+        User user = new User(null,"f","a","a","fd","f","3",new HashSet<>(),new HashSet<>());
+        userRepository.save(user);
+        twit.setUser(user);
 
         Twit returnedTwit = twitRepository.findById(twit.getId());
 
@@ -70,9 +84,11 @@ class TwitRepositoryTest {
 
     @Test
     void findAll() {
-
         Twit twit = new Twit(null,"a",null,new HashSet<>());
         twitRepository.save(twit);
+        User user = new User(null,"f","a","a","fd","f","3",new HashSet<>(),new HashSet<>());
+        userRepository.save(user);
+        twit.setUser(user);
 
         List<Twit> returnedTwitList = twitRepository.findAll();
 
@@ -84,5 +100,6 @@ class TwitRepositoryTest {
     @AfterEach
     void truncate() {
         twitRepository.truncate();
+        userRepository.truncate();
     }
 }

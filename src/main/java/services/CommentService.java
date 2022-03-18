@@ -40,4 +40,8 @@ public class CommentService implements BaseService<Comment,Long> {
     public List<Comment> findAllByTwitId(Long twitId) {
         return commentRepository.findAllByTwitId(twitId);
     }
+
+    public List<Comment> findByTwitId(Long twitId) {
+        return commentRepository.findByTwitId(twitId);
+    }
 }

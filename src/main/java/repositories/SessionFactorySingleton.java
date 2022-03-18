@@ -15,7 +15,7 @@ public class SessionFactorySingleton {
 
         static {
             var registry = new StandardServiceRegistryBuilder()
-                    .configure("hibernateTest.cfg.xml")
+                    .configure("hibernate.cfg.xml")
                     .build();
 
 

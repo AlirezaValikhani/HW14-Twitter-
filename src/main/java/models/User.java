@@ -53,4 +53,11 @@ public class User {
 
     public User() {
     }
+
+    @Override
+    public String toString() {
+        return "-------------------\nID : " + id + "\nUser name : " + userName + "\nPassword : " + password +
+                "\nFirst name : " +  firstName + "\nLast name : " +  lastName +
+                "\nNational code : " +  nationalCode + "\nPhone number : " +  phoneNumber + "\n-------------------\n";
+    }
 }
